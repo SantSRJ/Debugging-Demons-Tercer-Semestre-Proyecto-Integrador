@@ -1,0 +1,62 @@
+{% extends "registration/layout.html" %}
+{% load static %} 
+
+
+{% block content %}
+
+    {% if form.errors %}
+     <p>Tu usuario y contraseña no coinciden. Por favor intenta otra vez.</p>
+    {% endif %}
+
+    {% if next %}
+        {% if user.is_authenticated %}
+         <p>Tu cuenta no tiene acceso a esta pagina, Para continuar por favor ingrese con un una cuenta </p>
+        {% else %}
+          <p>Por favor ingrese con una cuenta para ver esta pagina.</p>
+    {% endif %}
+
+    {% endif %}
+    <div class="container-fluid ">
+      <div class="mt-2">
+          <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Mi Perfil</li>
+            </ol>
+          </nav>
+      </div>
+        <div class="d-flex flex-column align-items-center">
+          <h2 class="mb-3 mt-2">Login</h2>
+          <div class="d-flex flex-column m-2 p-5 rounded-2" style="background-color: #c2e7e1;">
+            <form method="POST" action="{% url 'login' %}" class="d-flex flex-column gap-1 align-items-center">
+              {% csrf_token %}
+                    <div class="">
+                      <div class="col mb-4">
+                        <div class="form-outline">
+                          <label class="form-label" for="username">Usuario</label>
+                          <input type="text" id="username" name="username" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col mb-4">
+                        <div class="form-outline">
+                          <label class="form-label" for="password">Contrseña</label>
+                          <input type="password" id="password" name="password" class="form-control" />
+                        </div>
+                      </div>
+
+                    <div class="d-flex justify-content-center" style="margin-top: 2em;">
+                      <input class="btn btn-success rounded-2 w-50" type="submit" value="Login" />
+                    </div>        
+        
+            </form>
+                  <div class="contenedor_link_log d-flex gap-3 mt-3">
+                    <p><a class="btn btn-outline-secondary" href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a></p>
+                    <p><a class="btn btn-secondary" href="{% url 'registro' %}">Soy Nuevo</a></p>
+                  </div>
+        </div>
+      </div>
+    </div>
+        
+    <script src="{% static 'js/registro.js'%}"></script>
+        
+{% endblock %}
