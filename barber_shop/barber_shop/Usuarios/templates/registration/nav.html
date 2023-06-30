@@ -1,0 +1,173 @@
+{% load static %} 
+
+{% block content %} 
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light"> 
+  <div class="container-fluid">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-mdb-toggle="collapse"
+      data-mdb-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <a class="navbar-brand mt-2 mt-lg-0" href="{% url 'home' %}">
+        <img
+          src="{% static 'img/logo.jpeg' %}"
+          height="30"
+          alt="MLogo barberia"
+          loading="lazy"
+        />
+      </a>
+
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Servicios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Acerca de</a>
+        </li>
+        {% if user.is_authenticated and  user.is_staff %}
+            <li>
+              <a class="nav-link" href="{% url 'nuevo_ervicio' %}">Nuevo Servicio</a>
+            </li>
+        {%endif%}
+      </ul>
+    </div>
+
+    <div class="d-flex align-items-center">
+    
+      {% if user.is_authenticated %}
+        <div class="dropdown">
+          <a
+          class="dropdown-toggle text-reset me-3 hidden-arrow" 
+          type="button" id="dropdownMenuButton" 
+          data-toggle="dropdown" 
+          aria-haspopup="true" 
+          aria-expanded="false"
+          href="#"
+          role="button"
+          >
+          {% if user.img %}
+            <img
+              src="{% static user.img %}"
+              class="rounded-circle"
+              height="30px"
+              width="30px"
+              alt="Imagen de perfin Usuario"
+              loading="lazy"
+            />
+            {%else%}
+            <img
+              src="{% static 'img/user/default.jpeg' %}"
+              class="rounded-circle"
+              height="30px"
+              width="30px"
+              alt="Imagen de perfin Usuario"
+              loading="lazy"
+            />
+            {% endif %}
+          </a>
+
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            style="left: -180%;" 
+            aria-labelledby="dropdownMenuButton"
+          >
+            <li>
+              <a class="dropdown-item" href="{% url 'perfil' %}">Mi Perfil</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'turnos' %}">Turnos</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'nuevoTurno' %}">Nuevo Turno</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'servicios' %}">Servicios</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'logout' %}">Salir</a>
+            </li>
+          </ul>
+        </div>
+        {%else%}
+          <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+        {%endif%}
+
+
+    </div>
+  </div>
+</nav>
+
+
+
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <div class="container">
+      <a class="navbar-brand me-2" href="{% url 'home' %}">
+        <img
+          src="{% static 'img/logo.jpeg' %}"
+          height="40"
+          alt="MDB Logo"
+          loading="lazy"
+          style="margin-top: -1px;"
+        />
+      </a>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-mdb-toggle="collapse"
+        data-mdb-target="#navbarButtonsExample"
+        aria-controls="navbarButtonsExample"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+  
+
+      <div class="collapse navbar-collapse" id="navbarButtonsExample">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="" href="{% url 'home' %}">BarberShop</a>
+          </li>
+        </ul>
+     
+  
+        <div class="d-flex align-items-center">
+
+            <a class="" href="{% url 'mostrar_servicio' %}">SERVICIOS</a>
+            {% if user.is_authenticated %}
+                {% if request.user.is_superuser %}
+                        <a class="boton_opciones_user" href="{% url 'logout' %}">SALIR</a>
+                        <a class="" href="{% url 'turnos' %}">ADMINISTRAR TURNOS</a>
+                        <a class="" href="{% url 'servicios' %}">ADMINISTRAR TURNOS</a>
+                        <a class="" href="{% url 'registro' %}">REGISTRO SUPER USUARIO</a>
+                {%else%}
+                    <div class="row">
+                            <a class="" href="{% url 'nuevoTurno' %}">NUEVO TURNOS</a> 
+                            <a class="" href="{% url 'turnos' %}">TURNOS</a> 
+                            <a class="" href="{% url 'logout' %}">SALIR</a> 
+                    </div>
+                {% endif %}
+            {%else%}
+            <div class="row" >
+                <a class="" href="{% url 'login'%}">LOGIN</a>
+                <a class="" href="{% url 'registro' %}">REGISTRO</a>
+                <a class="" href="/admin">PANEL DE ADMINISTRACION</a>
+            </div>    
+            {% endif %}
+
+        </div>
+      </div>
+    </div>
+  </nav> -->
+{% endblock %}
