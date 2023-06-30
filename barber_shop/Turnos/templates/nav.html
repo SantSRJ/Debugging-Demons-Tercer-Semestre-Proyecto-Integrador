@@ -46,14 +46,13 @@
 
     <div class="d-flex">
       {% if user.is_authenticated %}
-
         {% if user.is_staff %}
           <div class="nav-item">
-            <a class="nav-link mr-5 " href="/admin">Panel de administración</a>
+            <a class="nav-link mr-5 text-secondary" href="/admin">Panel de administración</a>
           </div>
         {% endif %}
         <div class="nav-item">
-          <a class="nav-link mr-5" href="{% url 'nuevoTurno' %}">Nuevo Turno</a>
+          <a class="btn btn-outline-secondary mr-5" href="{% url 'nuevoTurno' %}">Nuevo Turno</a>
         </div>
 
         <div class="dropdown">

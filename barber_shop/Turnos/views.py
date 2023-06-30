@@ -5,26 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import *
 
-# Create your views here.
-
-
-def home(request):
-    return render(request, 'home.html',{'mensaje': 'Explora nuestros Servicios'})
-
-@login_required(login_url='login')
-def turnos(request):
-    
-    user = request.user
-    turnos = Turno.objects.filter(cliente = user)
-    profesionales = Usuario.objects.filter(esBarbero=True)
-    servicios = Servicios.objects.all()
-
-    if request.user.is_authenticated:
-        return render(request, 'turnos.html',{'turnos': turnos,
-                                              'servicios': servicios,
-                                              'profesionales': profesionales,
-                                              'vacio': 'No tiene turnos'})
-
+# Crear Turno
 @login_required(login_url='login')
 def nuevoTurno(request):
     
@@ -53,15 +34,55 @@ def nuevoTurno(request):
     
     return render(request, 'altaTurno.html',{'profesionales': profesionales, 'servicios': servicios})
 
-
-def acercaDe(request):
-        return render(request, 'acercaDe.html')
-    
-    
+# Eliminar Turno 
     
 def eliminarTurno(request, id):
     Turno.objects.filter(pk=id).delete()
     mensaje = "Turno eliminado."
     turnos =  Turno.objects.all()
     return render (request, 'turnos.html',{'turnos':turnos, 'mensaje':mensaje})
+
+# Lista De Turnos
+
+@login_required(login_url='login')
+def turnos(request):
+    
+    user = request.user
+    turnos = Turno.objects.filter(cliente = user)
+    profesionales = Usuario.objects.filter(esBarbero=True)
+    servicios = Servicios.objects.all()
+
+    if request.user.is_authenticated:
+        return render(request, 'turnos.html',{'turnos': turnos,
+                                              'servicios': servicios,
+                                              'profesionales': profesionales,
+                                              'vacio': 'No tiene turnos'})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def acercaDe(request):
+        return render(request, 'acercaDe.html')
+    
+    
+def home(request):
+    return render(request, 'home.html',{'mensaje': 'Explora nuestros Servicios'})
     

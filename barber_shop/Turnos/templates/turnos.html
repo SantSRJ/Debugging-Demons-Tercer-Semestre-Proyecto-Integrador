@@ -7,7 +7,7 @@
 
     <!-- <section>
         {% if turnos %}
-        <div class="d-flex flex-wrap">
+        <div class="d-flex">
             {% for turno in turnos %}
                     <div class="col">
                         <div class="card">
@@ -20,8 +20,8 @@
                               </div>
                             </div>
                             <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
-                              <img class="img-fluid" src="{% static turno.servicio.img %}"
-                                alt="Card image cap" />
+                              <img class="" style="max-width: 300px;" src="{% static turno.servicio.img %}"
+                                alt="Card image cap"/>
                               <a href="#!">
                                 <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
                               </a>
@@ -53,43 +53,34 @@
 
 
 
-
-
-<div class="container d-flex">
-        <section class="mx-auto my-5" style="max-width: 23rem;">
-            {% if turnos %}
-            {% for turno in turnos %}
+{% if turnos %}
+  <div class="d-flex">
+      {% for turno in turnos %}
+      <div class="row row-cols-3 g-3">
+        <div class="col">
           <div class="card">
-            <div class="card-body d-flex flex-row">
-              <img src="{% static turno.profesional.img%}" class="rounded-circle me-3" height="50px"
-                width="50px" alt="avatar" />
-              <div>
-                <h5 class="card-title font-weight-bold mb-2">{{ turno.servicio.nombre }}</h5>
-                <p class="card-text"><i class="far fa-clock pe-2"></i> {{ turno.fechaHora }}</p>
-              </div>
-            </div>
-            <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
-              <img class="img-fluid" src="{% static turno.servicio.img %}"
-                alt="Card image cap" />
-              <a href="#!">
-                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-              </a>
-            </div>
+            <img src="{% static turno.servicio.img %}" class="card-img-top"
+              alt="Hollywood Sign on The Hill" />
             <div class="card-body">
-                <p class="card-text collapse" id="collapseContent">
-                    {{ turno.servicio.descripcion}}
-                    <p>Prof.: {{ turno.profesional.first_name }} {{ turno.profesional.last_name }}</p>
-                </p>
-                <div class="d-flex justify-content-between">
-                    <a class="btn btn-link link-danger p-md-1 my-1" data-mdb-toggle="collapse" href="#collapseContent"
-                    role="button" aria-expanded="false" aria-controls="collapseContent">Detalle</a>
-                </div>
+              <h5 class="card-title">{{turno.servicio.nombre }}</h5>
+              <h4>{{ turno.fechaHora }}</h4>
+              <p class="card-text">
+                This is a longer card with supporting text below as a natural lead-in to
+                additional content. This content is a little bit longer.
+              </p>
             </div>
+            <div class="flex-column justify-content-end">
+              <a href="{% url 'eliminarTurno' turno.id %}" class="btn btn-danger p-md-1 mb-0">Cancelar</a>
+          </div>
+          </div>
         </div>
-        {%endfor%}
-        {%endif%}
-        </section>
+      </div>
+      {%endfor%}
 </div>
+  {%else%}
+  {{ vacio }}
+  {%endif%}
+
 
 
 {% endblock %}

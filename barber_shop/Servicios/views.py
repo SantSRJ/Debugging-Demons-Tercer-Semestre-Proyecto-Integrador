@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import modificarServicioForm
+from .models import Servicios
 
 # Create your views here.
 
@@ -24,36 +25,33 @@ def mostrarServicio(request):
     servicios = Servicios.objects.all()
     return render(request, 'servicios.html', {'servicios': servicios, 'mensaje': "No hay Servicios"})
 
-def eliminarServicio(request, id): #Del
-    servicios = get_object_or_404(Servicios, idServicio=id)
 
-    if request.method == 'POST':
-        servicios.delete()
-        return redirect('mostrar_servicio')
-    return render(request, 'mostrar_servicio.html', {'servicios': servicios})
+def eliminarServicio(request, id):
+    Servicios.objects.filter(pk=id).delete()
+    mensaje = "Servicio eliminado."
+    servicios =  Servicios.objects.all()
+    return render (request, 'turnos.html',{'turnos':servicios, 'mensaje':mensaje})
 
+
+def mostrarFormularioServicio(request, id):
+    
+    servicio=  Servicios.objects.only(id =id)
+    return render(request, 'altaServicio.html', {'servicio':servicio})
+    
+    pass
 
 
 def modificarServicio(request, id):
     
     if request.method == 'POST':
-        form = modificarServicioForm(request.POST)
-        if form.is_valid():
-            servicios.precio = form.cleaned_data['precio']
-            servicios.descripcion = form.cleaned_data['descripcion']
+            nombre = request.POST['nombre']
+            descripcion = request.POST['direccion']
+            precio = request.POST['precio']
+            img = request.POST['img']
             
-            if form.cleaned_data['nombre']:
-                servicios.nombre = form.cleaned_data['nombre']
+            servicio =  Servicios(id=id,nombre=nombre, precio=precio, descripcion=descripcion, imagen=img)
             
-            servicios.save()
+            servicio.save()
+            
             return redirect('servicios')
-    else:
-        form = modificarServicioForm(initial={
-            'nombre': servicios.nombre,
-            'precio': servicios.precio,
-            'descripcion': servicios.descripcion,
-        })
-    
-    return render(request, 'modificar_servicio.html', {'form': form})
-
 
